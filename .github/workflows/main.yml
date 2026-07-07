@@ -1,0 +1,19 @@
+name: Build Custom VESC
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install ARM Toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi
+        
+      - name: Compile Firmware
+        run: make
+        
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: VESC_Firmware
+          path: build/
